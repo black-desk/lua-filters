@@ -69,6 +69,10 @@ end
 --- Filter function for code blocks
 local transclude
 function transclude (cb)
+  if cb.classes:includes 'pandoc_markdown' then
+    return pandoc.read(cb.text, 'markdown', PANDOC_READER_OPTIONS).blocks
+  end
+
   -- ignore code blocks which are not of class "include".
   if not cb.classes:includes 'include' then
     return
